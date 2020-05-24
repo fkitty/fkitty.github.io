@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工具 webpack 4 webpack-dev-server TypeScript3 vscode  步骤 创建目录和远程仓库  12345选择 创建一个初始化的md文件Add .gitignore 中选择NodeAdd a Licenses 选择MIT lincene：在仓库中包含开源许可，以便于其他人参与    npm初始化  1234567新建一个本地目录，如文件夹命名为：my-ui&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="环境搭建-webpack">
+<meta property="og:url" content="http://yoursite.com/2020/05/24/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-webpack/index.html">
+<meta property="og:site_name" content="爱前端的安安">
+<meta property="og:description" content="工具 webpack 4 webpack-dev-server TypeScript3 vscode  步骤 创建目录和远程仓库  12345选择 创建一个初始化的md文件Add .gitignore 中选择NodeAdd a Licenses 选择MIT lincene：在仓库中包含开源许可，以便于其他人参与    npm初始化  1234567新建一个本地目录，如文件夹命名为：my-ui&amp;#x">
+<meta property="article:published_time" content="2020-05-24T13:40:53.000Z">
+<meta property="article:modified_time" content="2020-05-24T13:42:05.731Z">
+<meta property="article:author" content="Tuo.anqi">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/24/环境搭建-webpack/"/>
+
+
+
+
+
+  <title>环境搭建-webpack | 爱前端的安安</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">爱前端的安安</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/24/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tuo.anqi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2488849481,3108963854&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱前端的安安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">环境搭建-webpack</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-24T21:40:53+08:00">
+                2020-05-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-24T21:42:05+08:00">
+                2020-05-24
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ul>
+<li>webpack 4</li>
+<li>webpack-dev-server</li>
+<li>TypeScript3</li>
+<li>vscode</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>创建目录和远程仓库</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选择 创建一个初始化的md文件</span><br><span class="line"></span><br><span class="line">Add .gitignore 中选择Node</span><br><span class="line"></span><br><span class="line">Add a Licenses 选择MIT lincene：在仓库中包含开源许可，以便于其他人参与</span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>npm初始化</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">新建一个本地目录，如文件夹命名为：my-ui</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 这里注意地址后加上空格点 ？</span><br><span class="line">在当前根目录下执行：git clone 第一步新建的仓库地址(SSH) .</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; npm初始化</span><br><span class="line">clone完成后，执行：npm init -y</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>新建lib/index.tsx</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一般情况下库文件是放在lib文件夹下</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.tsx</span><br><span class="line">console.log(&#39;hi&#39;);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>新建webpack.config.js(默认的webpack配置)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">安装webpack:</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 回到webpack官网，yarn比npm更能避免一些出错</span><br><span class="line">yarn add webpack webpack-cli --save-dev    (dev表示安装到开发者的依赖中)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装时指定版本号</span><br><span class="line">yarn add webpack@4.29.6 webpack-cli@3.2.3 --save-dev</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; pack.json中新生成</span><br><span class="line">&quot;homepage&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;fkitty&#x2F;myui-test-01#readme&quot;,</span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">  &quot;awesome-typescript-loader&quot;: &quot;^5.2.1&quot;,</span><br><span class="line">  &quot;webpack&quot;: &quot;^4.29.6&quot;, &#x2F;&#x2F; 向上兼容（^ 6上）</span><br><span class="line">  &quot;webpack-cli&quot;: &quot;^3.2.3&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tsx变成可执行的js,需要运行webpack来进行转义，webpack不知道怎么转义，需要创建一个webpack的配置</span><br><span class="line">1. 配置entry-整个程序的入口是哪里</span><br><span class="line">2. 配置output-输出，代码输出成什么样子（使用umd配置库格式）</span><br><span class="line">3. 配置module.rules(jsx \tsx\ scss)</span><br><span class="line">4. 配置plugins</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">配置文件:(webpack语法与普通的node.js类似)</span><br><span class="line">&#x2F;&#x2F; webpack.config.js</span><br><span class="line">const path &#x3D; require(&#39;path&#39;);</span><br><span class="line">module.export &#x3D; &#123; &#x2F;&#x2F; 导出一个对象</span><br><span class="line">  enrty: &#123;</span><br><span class="line">    index: &#39;.&#x2F;lib&#x2F;index.tsx&#39; &#x2F;&#x2F; 用相对路径，更明确</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 到这里还不能编译，因为webpack不知道ts是什么</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 配置tsx的解释方式（awesome-typescript-loader）</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        &#x2F;&#x2F; 正则，如何知道某个文件是tsx ?-表示x可有可无 $-表示必须是以这个后缀名结束的文件</span><br><span class="line">        test: &#x2F;\.tsx?$&#x2F;</span><br><span class="line">        &#x2F;&#x2F; loader的名字（安装：yarn add awesome-typescript-loader --dev ）</span><br><span class="line">        loader: &#39;awesome-typescript-loader&#39;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 输出</span><br><span class="line">  output: &#123;</span><br><span class="line">    &#x2F;&#x2F; 要使用绝对路径，dirname是当前目录，win要转义 &#39;\\dist&#39;,这样的写法在某些操作系统上是不能运行的</span><br><span class="line">    &lt;!--path: __dirname + &#39;&#x2F;dist&#39;--&gt;</span><br><span class="line">    path: path.resolve(__dirname, &#39;dist&#x2F;lib&#39;) &#x2F;&#x2F; resolve-根据操作系统的类型把参数中的前后目录连接起来</span><br><span class="line">    library: &#39;taq-ui&#39; &#x2F;&#x2F; 库的名字</span><br><span class="line">    libraryTarget: &#39;umd&#39; &#x2F;&#x2F; 库导出定义的目标格式(commonjs umd amd)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 运行webpack</span><br><span class="line">npx webpack</span><br><span class="line"></span><br><span class="line">可能会报错，根据报错信息依次解决问题</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装ts</span><br><span class="line">yarn add typescript --dev</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 警告</span><br><span class="line">配置mode： &#39;production&#39; &#x2F;&#x2F; 是生产模式</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 运行成功</span><br><span class="line">当写一个index.tsx  然后运行webpack  就会打包成lib&#x2F;index.js</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">小故事：umd前端历史上的分裂</span><br><span class="line">最开始是没有包管理系统的，所有的js是通过script标签一个一个加载到页面中的，就会导致所有js之间有全局变量会相互影响，所以就需要打包</span><br><span class="line">使用了require.js，</span><br><span class="line">amd：异步的模块定义</span><br><span class="line">对模块进行了定义，全局变量只在该模块中有效，对模块进行了一个定义common.js</span><br><span class="line">由于common只在node中有效，amd只在浏览器中有效</span><br><span class="line">这时候，为了统一，umd出现了，统一的模块定义，</span><br><span class="line">umd的核心是：如果存在define函数就用defined方式来定义，如果不存在就看有没有module，有module就是common.js,还没有就用scriot方式根据特征选择不停的模块定义方式</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">什么时候加dev</span><br><span class="line">判断标准：是否只给开发者用，若只给开发者用就dev,给用户用就不用加</span><br><span class="line">举例：</span><br><span class="line">React-不加</span><br><span class="line">webpack-加</span><br><span class="line">jQuery-不加</span><br><span class="line">TypeScript-加</span><br><span class="line"></span><br><span class="line">--save的含义</span><br><span class="line">会把依赖包名称添加到 package.json文件 dependencies键下</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以下三个等价 save缩写S，dev缩写D，S是默认的</span><br><span class="line">npm install --save webpack</span><br><span class="line">npm install -S webpack</span><br><span class="line">npm install webpack</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以下两个等价</span><br><span class="line">npm install --save-dev webpack</span><br><span class="line">npm install -D webpack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yarn add </span><br><span class="line">yarn add --dev</span><br></pre></td></tr></table></figure>
+
+
+<ol start="5">
+<li>配置webpack-dev-server与webpack.config.dev.js<br>(开发环境的webpack配置)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于index.tsx每次改变之后，都要再执行一次npx webpack，用webpacl-dev-server来解决慢和没有自动打包的问题</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用：</span><br><span class="line"> - 安装：yarn add webpack-dev-server --dev</span><br><span class="line"> - 运行：npx webpack-dev-server</span><br><span class="line"> - 打开网页： http:&#x2F;&#x2F;localhost:8080&#x2F;index.js</span><br><span class="line"></span><br><span class="line">就可以动态的得到随时编译的代码</span><br><span class="line"></span><br><span class="line">可以发现index.jsx中仅有的console.log(&#39;hi&#39;)，打包后为了兼容环境 ，在lib&#x2F;index.js中变成了好多好多代码，http:&#x2F;&#x2F;localhost:8080&#x2F;index.js的结果中就是lib&#x2F;index.js中的内容，</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">webpack-dev-server的原理：</span><br><span class="line">没有webpack-dev-server，把一个文件打包成另一个文件用的是webpack</span><br><span class="line"></span><br><span class="line">webpack-dev-server，开了一个server，默认监听的是8080端口，这个8080可以接受不同的请求，例如：请求的是127.0.0.1:8080&#x2F;1.js，(实际上1.js是不存在的)，这时候server就去找，发现了1.tsx，把它翻译成1.js，</span><br><span class="line">注意这里没有翻译成文件，只是把1.js翻译成了字符串，放到了内存中，放在内存中的好处是响应速度快</span><br><span class="line"></span><br><span class="line">简言之：</span><br><span class="line">先把1.tsx翻译成1.js放在了内存中，等用户访问1.js的时候，直接从内存中把1.js抛出去，用户就拿到了1.js</span><br></pre></td></tr></table></figure>
+
+
+<ol start="6">
+<li>创建index.html(把js放到html中运行)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 1、在根目录下新建文件index.html</span><br><span class="line">&#x2F;&#x2F; 2、引入js的时候，当js的文件名改变之后，html中每次都要手动去改</span><br><span class="line">&#x2F;&#x2F; 3、配置webpack, 让html中的js文件名自动生成</span><br><span class="line">&#x2F;&#x2F; 4、 安装插件 html-webpack-plugin</span><br><span class="line"></span><br><span class="line">安装：yarn add html-webpack-plugin --dev</span><br><span class="line">使用：</span><br><span class="line">&#x2F;&#x2F;webpack.config.js</span><br><span class="line">const HtmlWebpackPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">  new HtmlWebpackPlugin(&#123;</span><br><span class="line">    title: &#39;TAQUI&#39;, &#x2F;&#x2F; 在html中配置之后生效&lt;title&gt;&lt;%&#x3D; htmlWebpackPlugin.options.title %&gt;&lt;&#x2F;title&gt;</span><br><span class="line">    template: &#39;index.html&#39; &#x2F;&#x2F; 原来的html是什么</span><br><span class="line">  &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 在lib&#x2F;index.jsx中</span><br><span class="line">const div &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">div.innerText&#x3D;&#39;div&#39;;</span><br><span class="line">document.body.appendChild(div);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.html中只保留最初html, 没有了script，tsx还是会执行</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">你好呀</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 运行</span><br><span class="line">npx webpack-dev-server</span><br><span class="line">&#x2F;&#x2F; 查看网页源代码</span><br><span class="line">&lt;!doctype html&gt; 你好呀&lt;script src&#x3D;&quot;index.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">这里最后插入的index.js就是这个插件的作用</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index.html 默认变成了webpack-dev-server的首页</span><br><span class="line">只要改js, js就会自动在首页上运行</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/17/Class%E7%BB%84%E4%BB%B6-VS-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6/" rel="next" title="Class组件 VS 函数式组件">
+                <i class="fa fa-chevron-left"></i> Class组件 VS 函数式组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2488849481,3108963854&fm=26&gp=0.jpg"
+                alt="Tuo.anqi" />
+            
+              <p class="site-author-name" itemprop="name">Tuo.anqi</p>
+              <p class="site-description motion-element" itemprop="description">不忘初心，砥砺前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fkitty" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tuo.anqi@datatom.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tuo.anqi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

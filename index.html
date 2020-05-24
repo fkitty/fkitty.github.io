@@ -250,6 +250,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/24/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tuo.anqi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2488849481,3108963854&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爱前端的安安">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/24/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-webpack/" itemprop="url">环境搭建-webpack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-24T21:40:53+08:00">
+                2020-05-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-24T21:42:05+08:00">
+                2020-05-24
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ul>
+<li>webpack 4</li>
+<li>webpack-dev-server</li>
+<li>TypeScript3</li>
+<li>vscode</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>创建目录和远程仓库</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选择 创建一个初始化的md文件</span><br><span class="line"></span><br><span class="line">Add .gitignore 中选择Node</span><br><span class="line"></span><br><span class="line">Add a Licenses 选择MIT lincene：在仓库中包含开源许可，以便于其他人参与</span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li>npm初始化</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">新建一个本地目录，如文件夹命名为：my-ui</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 这里注意地址后加上空格点 ？</span><br><span class="line">在当前根目录下执行：git clone 第一步新建的仓库地址(SSH) .</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; npm初始化</span><br><span class="line">clone完成后，执行：npm init -y</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>新建lib/index.tsx</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一般情况下库文件是放在lib文件夹下</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.tsx</span><br><span class="line">console.log(&#39;hi&#39;);</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>新建webpack.config.js(默认的webpack配置)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">安装webpack:</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 回到webpack官网，yarn比npm更能避免一些出错</span><br><span class="line">yarn add webpack webpack-cli --save-dev    (dev表示安装到开发者的依赖中)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装时指定版本号</span><br><span class="line">yarn add webpack@4.29.6 webpack-cli@3.2.3 --save-dev</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; pack.json中新生成</span><br><span class="line">&quot;homepage&quot;: &quot;https:&#x2F;&#x2F;github.com&#x2F;fkitty&#x2F;myui-test-01#readme&quot;,</span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">  &quot;awesome-typescript-loader&quot;: &quot;^5.2.1&quot;,</span><br><span class="line">  &quot;webpack&quot;: &quot;^4.29.6&quot;, &#x2F;&#x2F; 向上兼容（^ 6上）</span><br><span class="line">  &quot;webpack-cli&quot;: &quot;^3.2.3&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tsx变成可执行的js,需要运行webpack来进行转义，webpack不知道怎么转义，需要创建一个webpack的配置</span><br><span class="line">1. 配置entry-整个程序的入口是哪里</span><br><span class="line">2. 配置output-输出，代码输出成什么样子（使用umd配置库格式）</span><br><span class="line">3. 配置module.rules(jsx \tsx\ scss)</span><br><span class="line">4. 配置plugins</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">配置文件:(webpack语法与普通的node.js类似)</span><br><span class="line">&#x2F;&#x2F; webpack.config.js</span><br><span class="line">const path &#x3D; require(&#39;path&#39;);</span><br><span class="line">module.export &#x3D; &#123; &#x2F;&#x2F; 导出一个对象</span><br><span class="line">  enrty: &#123;</span><br><span class="line">    index: &#39;.&#x2F;lib&#x2F;index.tsx&#39; &#x2F;&#x2F; 用相对路径，更明确</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 到这里还不能编译，因为webpack不知道ts是什么</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 配置tsx的解释方式（awesome-typescript-loader）</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        &#x2F;&#x2F; 正则，如何知道某个文件是tsx ?-表示x可有可无 $-表示必须是以这个后缀名结束的文件</span><br><span class="line">        test: &#x2F;\.tsx?$&#x2F;</span><br><span class="line">        &#x2F;&#x2F; loader的名字（安装：yarn add awesome-typescript-loader --dev ）</span><br><span class="line">        loader: &#39;awesome-typescript-loader&#39;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 输出</span><br><span class="line">  output: &#123;</span><br><span class="line">    &#x2F;&#x2F; 要使用绝对路径，dirname是当前目录，win要转义 &#39;\\dist&#39;,这样的写法在某些操作系统上是不能运行的</span><br><span class="line">    &lt;!--path: __dirname + &#39;&#x2F;dist&#39;--&gt;</span><br><span class="line">    path: path.resolve(__dirname, &#39;dist&#x2F;lib&#39;) &#x2F;&#x2F; resolve-根据操作系统的类型把参数中的前后目录连接起来</span><br><span class="line">    library: &#39;taq-ui&#39; &#x2F;&#x2F; 库的名字</span><br><span class="line">    libraryTarget: &#39;umd&#39; &#x2F;&#x2F; 库导出定义的目标格式(commonjs umd amd)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 运行webpack</span><br><span class="line">npx webpack</span><br><span class="line"></span><br><span class="line">可能会报错，根据报错信息依次解决问题</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装ts</span><br><span class="line">yarn add typescript --dev</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 警告</span><br><span class="line">配置mode： &#39;production&#39; &#x2F;&#x2F; 是生产模式</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 运行成功</span><br><span class="line">当写一个index.tsx  然后运行webpack  就会打包成lib&#x2F;index.js</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">小故事：umd前端历史上的分裂</span><br><span class="line">最开始是没有包管理系统的，所有的js是通过script标签一个一个加载到页面中的，就会导致所有js之间有全局变量会相互影响，所以就需要打包</span><br><span class="line">使用了require.js，</span><br><span class="line">amd：异步的模块定义</span><br><span class="line">对模块进行了定义，全局变量只在该模块中有效，对模块进行了一个定义common.js</span><br><span class="line">由于common只在node中有效，amd只在浏览器中有效</span><br><span class="line">这时候，为了统一，umd出现了，统一的模块定义，</span><br><span class="line">umd的核心是：如果存在define函数就用defined方式来定义，如果不存在就看有没有module，有module就是common.js,还没有就用scriot方式根据特征选择不停的模块定义方式</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">什么时候加dev</span><br><span class="line">判断标准：是否只给开发者用，若只给开发者用就dev,给用户用就不用加</span><br><span class="line">举例：</span><br><span class="line">React-不加</span><br><span class="line">webpack-加</span><br><span class="line">jQuery-不加</span><br><span class="line">TypeScript-加</span><br><span class="line"></span><br><span class="line">--save的含义</span><br><span class="line">会把依赖包名称添加到 package.json文件 dependencies键下</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以下三个等价 save缩写S，dev缩写D，S是默认的</span><br><span class="line">npm install --save webpack</span><br><span class="line">npm install -S webpack</span><br><span class="line">npm install webpack</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 以下两个等价</span><br><span class="line">npm install --save-dev webpack</span><br><span class="line">npm install -D webpack</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yarn add </span><br><span class="line">yarn add --dev</span><br></pre></td></tr></table></figure>
+
+
+<ol start="5">
+<li>配置webpack-dev-server与webpack.config.dev.js<br>(开发环境的webpack配置)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于index.tsx每次改变之后，都要再执行一次npx webpack，用webpacl-dev-server来解决慢和没有自动打包的问题</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用：</span><br><span class="line"> - 安装：yarn add webpack-dev-server --dev</span><br><span class="line"> - 运行：npx webpack-dev-server</span><br><span class="line"> - 打开网页： http:&#x2F;&#x2F;localhost:8080&#x2F;index.js</span><br><span class="line"></span><br><span class="line">就可以动态的得到随时编译的代码</span><br><span class="line"></span><br><span class="line">可以发现index.jsx中仅有的console.log(&#39;hi&#39;)，打包后为了兼容环境 ，在lib&#x2F;index.js中变成了好多好多代码，http:&#x2F;&#x2F;localhost:8080&#x2F;index.js的结果中就是lib&#x2F;index.js中的内容，</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">webpack-dev-server的原理：</span><br><span class="line">没有webpack-dev-server，把一个文件打包成另一个文件用的是webpack</span><br><span class="line"></span><br><span class="line">webpack-dev-server，开了一个server，默认监听的是8080端口，这个8080可以接受不同的请求，例如：请求的是127.0.0.1:8080&#x2F;1.js，(实际上1.js是不存在的)，这时候server就去找，发现了1.tsx，把它翻译成1.js，</span><br><span class="line">注意这里没有翻译成文件，只是把1.js翻译成了字符串，放到了内存中，放在内存中的好处是响应速度快</span><br><span class="line"></span><br><span class="line">简言之：</span><br><span class="line">先把1.tsx翻译成1.js放在了内存中，等用户访问1.js的时候，直接从内存中把1.js抛出去，用户就拿到了1.js</span><br></pre></td></tr></table></figure>
+
+
+<ol start="6">
+<li>创建index.html(把js放到html中运行)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 1、在根目录下新建文件index.html</span><br><span class="line">&#x2F;&#x2F; 2、引入js的时候，当js的文件名改变之后，html中每次都要手动去改</span><br><span class="line">&#x2F;&#x2F; 3、配置webpack, 让html中的js文件名自动生成</span><br><span class="line">&#x2F;&#x2F; 4、 安装插件 html-webpack-plugin</span><br><span class="line"></span><br><span class="line">安装：yarn add html-webpack-plugin --dev</span><br><span class="line">使用：</span><br><span class="line">&#x2F;&#x2F;webpack.config.js</span><br><span class="line">const HtmlWebpackPlugin &#x3D; require(&#39;html-webpack-plugin&#39;)</span><br><span class="line"></span><br><span class="line">plugins: [</span><br><span class="line">  new HtmlWebpackPlugin(&#123;</span><br><span class="line">    title: &#39;TAQUI&#39;, &#x2F;&#x2F; 在html中配置之后生效&lt;title&gt;&lt;%&#x3D; htmlWebpackPlugin.options.title %&gt;&lt;&#x2F;title&gt;</span><br><span class="line">    template: &#39;index.html&#39; &#x2F;&#x2F; 原来的html是什么</span><br><span class="line">  &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 在lib&#x2F;index.jsx中</span><br><span class="line">const div &#x3D; document.createElement(&#39;div&#39;);</span><br><span class="line">div.innerText&#x3D;&#39;div&#39;;</span><br><span class="line">document.body.appendChild(div);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.html中只保留最初html, 没有了script，tsx还是会执行</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">你好呀</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 运行</span><br><span class="line">npx webpack-dev-server</span><br><span class="line">&#x2F;&#x2F; 查看网页源代码</span><br><span class="line">&lt;!doctype html&gt; 你好呀&lt;script src&#x3D;&quot;index.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">这里最后插入的index.js就是这个插件的作用</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index.html 默认变成了webpack-dev-server的首页</span><br><span class="line">只要改js, js就会自动在首页上运行</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/Class%E7%BB%84%E4%BB%B6-VS-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -297,7 +492,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-05-17T18:29:57+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-05-17T18:32:33+08:00">
                 2020-05-17
               </time>
             
@@ -341,7 +536,7 @@
 <blockquote>
 <p><code>x(){}</code>这种形式中的x是在原型上的，所有实例公用一个x方法</p>
 </blockquote>
-<h5 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;index.tsx</span><br><span class="line">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;</span><br><span class="line">import ReactDOM from &quot;react-dom&quot;;</span><br><span class="line">import PropTypes from &#39;prop-types&#39;;</span><br><span class="line"></span><br><span class="line">interface Props&#123;</span><br><span class="line">  message?: any; &#x2F;&#x2F; ?表示可传可不传</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface User &#123;</span><br><span class="line">  id: string;</span><br><span class="line">  name: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const App: React.FunctionComponent&lt;Props&gt; &#x3D; (props) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; 函数组件对state的使用</span><br><span class="line">  const [n, setN] &#x3D; useState(1);</span><br><span class="line">  const [m, setM] &#x3D; useState(2);</span><br><span class="line">  const [user, setUser] &#x3D; useState&lt;User&gt;(&#123;</span><br><span class="line">    id: &#39;1&#39;,</span><br><span class="line">    name: &#39;sunday&#39;,</span><br><span class="line">  &#125;)</span><br><span class="line">  const x &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    setN(n+1)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const y &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    setM(m+1)</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 在每次ui更新之后执行 ？ 怎么区分</span><br><span class="line">  &#x2F;&#x2F; 第二个参数，希望什么时候变的时候执行(依赖)</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; console.log(&quot;mounted 或者 updated之后&quot;)</span><br><span class="line">    console.log(&#39;n 改变之后执行&#39;)</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      console.log(&#39;组件销毁了&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [n]);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; mounted 还是updated</span><br><span class="line">  &#x2F;&#x2F; 不管什么变，都不变，只有第一次</span><br><span class="line">  useEffect(</span><br><span class="line">    () &#x3D;&gt; &#123;</span><br><span class="line">      &#x2F;&#x2F; console.log(&quot;mounted 或者 updated之后&quot;)</span><br><span class="line">      console.log(&#39;mount&#39;)</span><br><span class="line">    &#125;,</span><br><span class="line">    []</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 强制把messge当作string来用（@这里有报错）</span><br><span class="line">  &#x2F;&#x2F; props.message!.split(&#39;&#39;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;App&quot;&gt;</span><br><span class="line">      &lt;h1&gt;&#123;props.message&#125;&lt;&#x2F;h1&gt;</span><br><span class="line">      &lt;div&gt;&#123;n&#125;&lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div&gt;&#123;m&#125;&lt;&#x2F;div&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;x&#125;&gt;n+1&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;y&#125;&gt;m+1&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.defaultProps &#x3D; &#123;</span><br><span class="line">  message: &#39;default message&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.displayName &#x3D; &quot;Test&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 在函数组件中检查js的类型</span><br><span class="line">App.propTypes &#x3D; &#123;</span><br><span class="line">  message: PropTypes.number,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const rootElement &#x3D; document.getElementById(&quot;root&quot;);</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;App message&#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;React.StrictMode&gt;,</span><br><span class="line">  rootElement</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h5 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;index.tsx</span><br><span class="line"></span><br><span class="line">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;</span><br><span class="line">import ReactDOM from &quot;react-dom&quot;;</span><br><span class="line">import PropTypes from &#39;prop-types&#39;;</span><br><span class="line"></span><br><span class="line">interface Props&#123;</span><br><span class="line">  message?: any; &#x2F;&#x2F; ?表示可传可不传</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface User &#123;</span><br><span class="line">  id: string;</span><br><span class="line">  name: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const App: React.FunctionComponent&lt;Props&gt; &#x3D; (props) &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; 函数组件对state的使用</span><br><span class="line">  const [n, setN] &#x3D; useState(1);</span><br><span class="line">  const [m, setM] &#x3D; useState(2);</span><br><span class="line">  const [user, setUser] &#x3D; useState&lt;User&gt;(&#123;</span><br><span class="line">    id: &#39;1&#39;,</span><br><span class="line">    name: &#39;sunday&#39;,</span><br><span class="line">  &#125;)</span><br><span class="line">  const x &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    setN(n+1)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const y &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    setM(m+1)</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;&#x2F; 在每次ui更新之后执行 ？ 怎么区分</span><br><span class="line">  &#x2F;&#x2F; 第二个参数，希望什么时候变的时候执行(依赖)</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; console.log(&quot;mounted 或者 updated之后&quot;)</span><br><span class="line">    console.log(&#39;n 改变之后执行&#39;)</span><br><span class="line">    return () &#x3D;&gt; &#123;</span><br><span class="line">      console.log(&#39;组件销毁了&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [n]);</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; mounted 还是updated</span><br><span class="line">  &#x2F;&#x2F; 不管什么变，都不变，只有第一次</span><br><span class="line">  useEffect(</span><br><span class="line">    () &#x3D;&gt; &#123;</span><br><span class="line">      &#x2F;&#x2F; console.log(&quot;mounted 或者 updated之后&quot;)</span><br><span class="line">      console.log(&#39;mount&#39;)</span><br><span class="line">    &#125;,</span><br><span class="line">    []</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 强制把messge当作string来用（@这里有报错）</span><br><span class="line">  &#x2F;&#x2F; props.message!.split(&#39;&#39;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className&#x3D;&quot;App&quot;&gt;</span><br><span class="line">      &lt;h1&gt;&#123;props.message&#125;&lt;&#x2F;h1&gt;</span><br><span class="line">      &lt;div&gt;&#123;n&#125;&lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div&gt;&#123;m&#125;&lt;&#x2F;div&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;x&#125;&gt;n+1&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;y&#125;&gt;m+1&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.defaultProps &#x3D; &#123;</span><br><span class="line">  message: &#39;default message&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.displayName &#x3D; &quot;Test&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 在函数组件中检查js的类型</span><br><span class="line">App.propTypes &#x3D; &#123;</span><br><span class="line">  message: PropTypes.number,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const rootElement &#x3D; document.getElementById(&quot;root&quot;);</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;App message&#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;React.StrictMode&gt;,</span><br><span class="line">  rootElement</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <h2 id="比较总结"><a href="#比较总结" class="headerlink" title="比较总结"></a>比较总结</h2><ul>
 <li>明显特征：<ul>
@@ -1034,7 +1229,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1045,7 +1240,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1056,7 +1251,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
