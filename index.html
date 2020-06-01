@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-05-31T22:25:59+08:00">
-                2020-05-31
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T15:29:21+08:00">
+                2020-06-01
               </time>
             
           </span>
@@ -343,7 +343,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. arr.join实际上是arr.prototype.join(202)对应的函数（arr.join &#x3D;&#x3D;&#x3D; arr.prototype.join &#x3D;&#x3D;&#x3D; ADDR 401）</span><br><span class="line">2. arr.join(&#39;-&#39;)等价于arr.join.call(arr, &#39;-&#39;)</span><br><span class="line">&#x2F;&#x2F; 理论上join只接受到了一个参数，它是怎么知道join的数组是谁呢？</span><br><span class="line">&#x2F;&#x2F; 直接掉用arr.join(&#39;-&#39;)时，js把arr当作call的第一个参数(this)传入,隐式传第一个参数</span><br><span class="line">3. join函数通过this访问到arr,通过arrguments[0]访问到&#39;-&#39;</span><br></pre></td></tr></table></figure>
 
 <p>==join的源代码==</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.join &#x3D; function(char)&#123;</span><br><span class="line">  let result &#x3D; this[0] || &#39;&#39;;</span><br><span class="line">  &#x2F;&#x2F; 便利this，让reuslt每次加上&#39;-&#39;,加上第二个值</span><br><span class="line">  let length &#x3D; this.length;</span><br><span class="line">  for(let i &#x3D; 1; i &lt; length; i++)&#123;</span><br><span class="line">    result +&#x3D; char + this[i];</span><br><span class="line">  &#125;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.join &#x3D; function(char)&#123;</span><br><span class="line">  let result &#x3D; this[0] || &#39;&#39;;</span><br><span class="line">  &#x2F;&#x2F; 遍历this，让reuslt每次加上&#39;-&#39;,加上第二个值</span><br><span class="line">  let length &#x3D; this.length;</span><br><span class="line">  for(let i &#x3D; 1; i &lt; length; i++)&#123;</span><br><span class="line">    result +&#x3D; char + this[i];</span><br><span class="line">  &#125;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-slice"><a href="#2-slice" class="headerlink" title="2. slice"></a>2. slice</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 数组切片，同时原数组不变</span><br><span class="line">arr.slice(beginIndex, endIndex)</span><br></pre></td></tr></table></figure>
 
