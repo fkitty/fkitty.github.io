@@ -441,7 +441,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-09T09:29:23+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-09T09:36:42+08:00">
                 2020-06-09
               </time>
             
@@ -479,12 +479,8 @@
           
             <h2 id="三个API的实现"><a href="#三个API的实现" class="headerlink" title="三个API的实现"></a>三个API的实现</h2><h4 id="1-join"><a href="#1-join" class="headerlink" title="1. join"></a>1. join</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let arr &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];</span><br><span class="line">arr.join(&#39;-&#39;); &#x2F;&#x2F; &#39;a-b-c&#39;</span><br></pre></td></tr></table></figure>
 
-<p>==对应内存图==</p>
-<p><img src="https://note.youdao.com/favicon.ico" alt="image"></p>
-<p>ADDR 101 |<br>—|—<br>arr的内图| </p>
-<p>ADDR 101 |<br>—|—<br>0: ‘a’|<br>1: ‘b’|<br>2: ‘c’|<br>length: 3|<br><strong>ptoto</strong> = ADDR 202|</p>
-<p>ADDR 202 |<br>—|—<br>pop|<br>join: ADDR 401|<br>slice|<br>…|</p>
-<p>ADDR 401 |<br>—|—<br>join函数的c++ 实现(chrome)| </p>
+<p><code>对应内存图</code></p>
+<p><img src="/images/neicun1.png" alt="image"><br><img src="/images/neicun2.png" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. arr.join实际上是arr.prototype.join(202)对应的函数（arr.join &#x3D;&#x3D;&#x3D; arr.prototype.join &#x3D;&#x3D;&#x3D; ADDR 401）</span><br><span class="line">2. arr.join(&#39;-&#39;)等价于arr.join.call(arr, &#39;-&#39;)</span><br><span class="line">&#x2F;&#x2F; 理论上join只接受到了一个参数，它是怎么知道join的数组是谁呢？</span><br><span class="line">&#x2F;&#x2F; 直接掉用arr.join(&#39;-&#39;)时，js把arr当作call的第一个参数(this)传入,隐式传第一个参数</span><br><span class="line">3. join函数通过this访问到arr,通过arrguments[0]访问到&#39;-&#39;</span><br></pre></td></tr></table></figure>
 
 <p>==join的源代码==</p>
