@@ -441,8 +441,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-01T15:29:21+08:00">
-                2020-06-01
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-09T09:29:23+08:00">
+                2020-06-09
               </time>
             
           </span>
@@ -480,6 +480,7 @@
             <h2 id="三个API的实现"><a href="#三个API的实现" class="headerlink" title="三个API的实现"></a>三个API的实现</h2><h4 id="1-join"><a href="#1-join" class="headerlink" title="1. join"></a>1. join</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let arr &#x3D; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];</span><br><span class="line">arr.join(&#39;-&#39;); &#x2F;&#x2F; &#39;a-b-c&#39;</span><br></pre></td></tr></table></figure>
 
 <p>==对应内存图==</p>
+<p><img src="https://note.youdao.com/favicon.ico" alt="image"></p>
 <p>ADDR 101 |<br>—|—<br>arr的内图| </p>
 <p>ADDR 101 |<br>—|—<br>0: ‘a’|<br>1: ‘b’|<br>2: ‘c’|<br>length: 3|<br><strong>ptoto</strong> = ADDR 202|</p>
 <p>ADDR 202 |<br>—|—<br>pop|<br>join: ADDR 401|<br>slice|<br>…|</p>
