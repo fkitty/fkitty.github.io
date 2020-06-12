@@ -21,7 +21,7 @@
 <meta property="og:description" content="使用Hexo和github搭建博客的步骤总结">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-07T07:14:48.000Z">
-<meta property="article:modified_time" content="2020-06-10T09:27:52.166Z">
+<meta property="article:modified_time" content="2020-06-12T08:47:20.901Z">
 <meta property="article:author" content="爱前端的安安">
 <meta name="twitter:card" content="summary">
     
@@ -215,6 +215,19 @@
 <li>编写完之后，若编写过程中没有本地预览，可以使用：生成静态网页<code>hexo g</code>，<code>hexo s</code>，进行本地查看</li>
 <li>上传到github <code>hexo d</code>(在仓库下可以添加描述，注明预览链接)</li>
 </ul>
+<ol start="7">
+<li>给博客换主题</li>
+</ol>
+<ul>
+<li>选择主题选择：<a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener">这里有主题的合集</a>,选择一个自己喜欢的主题</li>
+<li><code>cd themes</code></li>
+<li>下载这个主题，复制它的SSH地址或者http地址</li>
+<li>回到myBlog目录：<code>cd ..</code></li>
+<li>打开配置文件：<code>start _config.yml</code></li>
+<li>修改heme的值为你下载的主题的名字（注意冒号后面的空格）</li>
+<li>生成<code>hexo generate</code>，部署<code>hexo deploy</code>，刷新页面就可以了</li>
+</ul>
+<hr>
             
                 
 
