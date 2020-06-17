@@ -22,7 +22,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/funStack.jpeg">
 <meta property="article:published_time" content="2020-06-14T14:55:02.000Z">
-<meta property="article:modified_time" content="2020-06-15T15:12:13.558Z">
+<meta property="article:modified_time" content="2020-06-17T15:19:01.957Z">
 <meta property="article:author" content="爱前端的安安">
 <meta property="article:tag" content="函数">
 <meta name="twitter:card" content="summary">
@@ -278,7 +278,53 @@
 <blockquote>
 <p>柯里化在模板引擎中的使用，现在用的很少，但可以用来做惰性求值，其实在调第一个函数的时候，什么也没做，如果要最字符串做一些很重的操作，比如说正则，ajax等，真正调用的时候才生效</p>
 </blockquote>
-<h4 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h4><h4 id="回调和构造函数"><a href="#回调和构造函数" class="headerlink" title="回调和构造函数"></a>回调和构造函数</h4><h4 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h4>
+<h4 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h4><blockquote>
+<p>维基百科中的解释-&gt;在数学和计算科学中，高阶函数是至少满足下列一个条件的函数：</p>
+<ul>
+<li>接受一个或多函数作为输入</li>
+<li>输出一个函数 (lodash.carry?)</li>
+<li>也可以同时满足既输入函数有输出函数</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>作用：可以将函数任意的组合</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">举例：接受一个函数</span><br><span class="line">&#x2F;&#x2F;array.sort</span><br><span class="line">array.sort(function(a, b)&#123;a - b&#125;) &#x2F;&#x2F; array.sort.call(array, fn)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; array.forEach</span><br><span class="line">array.forEach(function(a)&#123;&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; array.map</span><br><span class="line">array.map(function()&#123;&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; array.filter</span><br><span class="line">array.filter(function()&#123;&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; array.reduce</span><br><span class="line">array.reduce(function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 既输入函数又输出函数</span><br><span class="line">&#x2F;&#x2F; 【function.prototype.bind】bind接受一个fn作为this,对this进行操作，操作的时候就是调用这个this,fn的参数全部都在后面</span><br><span class="line">fn.bind.call(fn, &#123;&#125;, 1, 2)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 柯里化和高阶函数的交叉部分</span><br><span class="line">️柯里化是将函数的个数变少然后输出一个函数，高阶函数就是输出一个新的函数，高阶函数的范围更广一点</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">作用举例：</span><br><span class="line">&#x2F;&#x2F; 需求：找出数组中的所有偶数,然后给这些偶数求和</span><br><span class="line">arr &#x3D; [1, 2, 3, 4, 5, 6, 7, 8];</span><br><span class="line"></span><br><span class="line">var sum &#x3D; 0;</span><br><span class="line">for(var i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">  if(arr[i] % 2 &#x3D;&#x3D;&#x3D; 0)&#123;</span><br><span class="line">    sum +&#x3D; array[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(sum);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 改造1</span><br><span class="line">array.filter(function(value)&#123;value % 2 &#x3D;&#x3D;&#x3D; 0&#125;).reduce(function(pre, next)&#123;return pre + next&#125;, 0)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 改造2</span><br><span class="line">reduce(filter(array, function(value)&#123;value %2 &#x3D;&#x3D;&#x3D; 0&#125;), function(pre, next)&#123;return pre + next&#125;, 0)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 找出单数排序</span><br><span class="line">sort(filter(array, function(value)&#123;value %2 &#x3D;&#x3D;&#x3D; 1&#125;), function(a, b)&#123;return a - b&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在react中，每个组件相当于一个纯函数，如果一个组件是纯函数，那组件和组件是不是可以相互转化，相互使用呢？</p>
+</blockquote>
+<h4 id="回调（callback）"><a href="#回调（callback）" class="headerlink" title="回调（callback）"></a>回调（callback）</h4><blockquote>
+</blockquote>
+<ul>
+<li>回调是被当作参数的函数</li>
+<li>回调是调用这个回调，例如：在map中对参数进行call的时候，那个call的动作,就叫callback，又来有回，传过去call回来</li>
+</ul>
+<blockquote>
+<p>注意⚠️：回调和异步没有任何关系</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 举例：异步的回调</span><br><span class="line">&#x2F;&#x2F; 这里fn就是回调</span><br><span class="line">setTimeout(fn, 1000)</span><br><span class="line"></span><br><span class="line">setTimeout(&#39;console.log(1)&#39;, 1000); &#x2F;&#x2F; 字符串也是一个函数</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; bind是一个高阶函数，会返回一个新的函数，这个新的函数一定会call这个fn,call  fn的时候一定会把第一个参数obj作为this传入</span><br><span class="line">setTimeout(fn.bind(obj), 1000, 1, 2, 3)</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><ul>
+<li>返回对象的函数就是构造函数</li>
+<li>一般首字母大写</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 举例</span><br><span class="line">Number(1)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 自己实现一个构造函数</span><br><span class="line">function Empty()&#123;</span><br><span class="line"></span><br><span class="line">  this.name &#x3D; &quot;空&quot;</span><br><span class="line">  &#x2F;&#x2F; 一般不需要自己去return,因为构造函数已经被很多语言默认的采纳了，它内部已经实现了return 对象</span><br><span class="line">  &#x2F;&#x2F; reurn &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">var empty &#x3D; new Empty; &#x2F;&#x2F; Empty.call(&#123;&#125;)  new是一个语法糖</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思考：我们的函数会经常返回对象吗？很少有函数返回对象，很多函数都会返回一个特定的，比如说字符串、数组、数字、布尔值等等，所以返回对象是一个特殊的例子，就叫做构造函数</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">其实都是函数函数</span><br><span class="line">1、如果一个函数接受一个函数，这个函数就是高阶函数</span><br><span class="line">2、如果一个函数返回一个函数，这个函数也叫做高阶函数</span><br><span class="line">3、如果一个函数被当作参数，那就是回调</span><br><span class="line">4、如果一个函数返回的函数中参数比原函数少一个参数，就是柯里化</span><br><span class="line">5、</span><br></pre></td></tr></table></figure>
             
                 
 
