@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爱前端的安安">
+    <title>Promise用法总结 - 爱前端的安安</title>
+    <meta name="author" content="爱前端的安安">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/test.png">
+    
+    
+    <meta name="description" content="这篇博客是对Promise用法的一个解析，包括为什么要用Promise,具体用法和一些细节问题">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Promise用法总结">
+<meta property="og:url" content="http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="爱前端的安安">
+<meta property="og:description" content="这篇博客是对Promise用法的一个解析，包括为什么要用Promise,具体用法和一些细节问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-21T14:09:41.000Z">
+<meta property="article:modified_time" content="2020-06-21T14:12:21.606Z">
+<meta property="article:author" content="爱前端的安安">
+<meta property="article:tag" content="异步">
+<meta name="twitter:card" content="summary">
+    
+        <meta rel="publisher" content="https://plus.google.com/99999"/>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/test1.gif"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-ejlztp1tasruqfvoz6xmgqng0anzae8ox7cqjj5yibieqgcmhe9fwxfae6zj.min.css">
+<link rel="stylesheet" href="/.css" src="/.js">
+
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/%20">爱前端的安安</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/test1.gif"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/test1.gif"/>
+            </a>
+            <span class="sidebar-profile-name">爱前端的安安</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/"
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Promise用法总结
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sun Jun 21 2020 22:09:41 GMT+0800">
+	
+		    6月 21, 2020
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/ES6/">ES6</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+
+<h4 id="回调与回调地域"><a href="#回调与回调地域" class="headerlink" title="回调与回调地域"></a>回调与回调地域</h4><blockquote>
+<p>在理解promise之前先介绍一下回调</p>
+<p>什么叫回调呢？在上一篇博客中有提到，在这里做一个简单的回顾</p>
+</blockquote>
+<ul>
+<li><p>回调的形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 声明函数</span><br><span class="line">function fn()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">fn(); &#x2F;&#x2F; 调函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function fn2() &#123;</span><br><span class="line">  fn() &#x2F;&#x2F; 这种调用形式-回调</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;就像生活中的打电话，再回拨电话 A-&gt;B(A的号码)  B-&gt;A</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 回调，把调用函数写在另一个函数里</span><br><span class="line">&#x2F;&#x2F; 把fn2给fn1，fn1自己回调完了之后，再回调fn2</span><br><span class="line">function fn1(fn2)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">fn1(fn2)</span><br></pre></td></tr></table></figure></li>
+<li><p>回调的定义</p>
+<blockquote>
+<p>把一个函数A传给另一个函数B调用,那么A就是回调函数</p>
+</blockquote>
+</li>
+<li><p>回调地域</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 为代码举例，用nodejs来获取用户信息</span><br><span class="line">function getUserMsg(consoleUserMsg)&#123;</span><br><span class="line">  &#x2F;&#x2F; 不用return，用回调的形式传出去</span><br><span class="line">  consoleUserMsg(&#39;name: kitty&#39;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function consoleUserMsg(userMsg)&#123;</span><br><span class="line">  console.log(userMsg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getUserMsg(consoleUserMsg)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 以上代码做一个变化：替换函数consoleUserMsg</span><br><span class="line">function getUserMsg(consoleUserMsg)&#123;</span><br><span class="line">  consoleUserMsg(&#39;name: kitty&#39;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getUserMsg(consoleUserMsg(userMsg)&#123; &#x2F;&#x2F; 匿名回调</span><br><span class="line">  console.log(userMsg);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 回调地域：一个函数中可以调另一个函数，另一个函数中可以调另另一个函数，就会导致回调中套回调，回调中又套回调，又套回调…</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 再复杂一点</span><br><span class="line">function getUserMsg(consoleUserMsg)&#123;</span><br><span class="line">  consoleUserMsg(&#39;name: kitty&#39;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getUserMsg(consoleUserMsg(userMsg)&#123; &#x2F;&#x2F; 匿名回调</span><br><span class="line">  console.log(userMsg);</span><br><span class="line">  saveUserMsg(userMsg, function()&#123;</span><br><span class="line">    getOtherMsg(function(otherUserMsg)&#123;</span><br><span class="line">      saveOtherMsg()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如何解决回调地域</p>
+<ul>
+<li>把匿名函数都抽出去(依然很复杂，只是形式上看起来比上面的简化了一点，解开了嵌套，这样会出现一个情况，就是变量无法逃出作用域)</li>
+<li>使用Promise</li>
+</ul>
+</blockquote>
+<ul>
+<li>回调的优缺点<ul>
+<li>优点：<ul>
+<li>回调可以很简单的通过函数和函数来传递数据，不不要任何其他的东西</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>回调嵌套多了就会造成回调地域</li>
+<li>传数据时候很麻烦，不同环境下回调的方式不相同（node中根据函数的第一个参数是否为空来判断，ajax成功success,失败error），全部要单独记</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">readFile(&#39;c:\\1.tex&#39;, function(error, data)&#123;</span><br><span class="line">  if(error)&#123;</span><br><span class="line">    console.log(&#39;失败&#39;, error);</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    console.log(&#39;成功&#39;, data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">$.ajax()</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Promise的使用"><a href="#Promise的使用" class="headerlink" title="Promise的使用"></a>Promise的使用</h4><ul>
+<li>简单用法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 将上面的例子改成Promise版,成功执行then的第一个 函数，失败执行第二个函数，规范了成功失败的执行，不存在嵌套了</span><br><span class="line">readFilePromise(&#39;c:\\1.tex&#39;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function getUserMsg() &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(&#39;第一次获取用户信息中......&#39;);</span><br><span class="line">    resolve(&#39;name: kitty&#39;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function consoleUserMsg(userMsg) &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(userMsg);</span><br><span class="line">    resolve();</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getOtherMsg() &#123;</span><br><span class="line"> return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(&#39;第二次获取用户信息中......&#39;);</span><br><span class="line">    resolve(&#39;name: lili&#39;)</span><br><span class="line"> &#125;)</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">getUserMsg()</span><br><span class="line">  .then(consoleUserMsg)</span><br><span class="line">  .then(getOtherMsg)</span><br><span class="line">  .then(consoleUserMsg)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 简化以上代码，只要打印用户信息</span><br><span class="line">function getUserMsg(name) &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    if(name &#x3D;&#x3D;&#x3D; &#39;kitty&#39;)&#123;</span><br><span class="line">      console.log(&#39;这是kitty&#39;)</span><br><span class="line">      resolve(&#39;嘻嘻嘻,给一个信息&#39;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#39;这不是kitty&#39;);</span><br><span class="line">      reject(); &#x2F;&#x2F; 不能返回信息，resolve();也是有信息的，只不过这个信息的是空的</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getUserMsg(&#39;kitty&#39;)</span><br><span class="line">  .then(</span><br><span class="line">      function(data)&#123;console.log(data)&#125;, &#x2F;&#x2F; resolve对应的回调</span><br><span class="line">      function()&#123;console.log(&#39;不是kitty哇啊哇&#39;)&#125; &#x2F;&#x2F; reject对应的回调</span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Promise套Promise</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">function getUserMsg(name) &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    if(name &#x3D;&#x3D;&#x3D; &#39;kitty&#39;)&#123;</span><br><span class="line">      console.log(&#39;这是kitty&#39;)</span><br><span class="line">      resolve([&#39;kitty&#39;, &#39;给一个信息&#39;]);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      console.log(&#39;这不是kitty&#39;);</span><br><span class="line">      reject(&#39;这不是kitty&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getUseFriend(name)&#123;</span><br><span class="line">   return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    if(name &#x3D;&#x3D;&#x3D; &#39;kitty&#39;)&#123;</span><br><span class="line">      resolve(&#39;kitty1、kitty2、kitty3&#39;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      reject();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function consoleMsg(data)&#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">    resolve(data[0]);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function consoleRejectRes(reason)&#123;</span><br><span class="line">  console.log(&#39;失败的原因：&#39; + reason)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;!--getUserMsg(&#39;kitty&#39;)--&gt;</span><br><span class="line">&lt;!--  .then(consoleMsg)--&gt;</span><br><span class="line">&lt;!--  .then(getUseFriend)--&gt;</span><br><span class="line">&lt;!--  .then(consoleMsg)--&gt;</span><br><span class="line"></span><br><span class="line">getUserMsg(&#39;haha&#39;)</span><br><span class="line">  .then(consoleMsg, consoleRejectRes)</span><br><span class="line">  .then(getUseFriend)</span><br><span class="line">  .then(consoleMsg)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行结果：getUserMsg这个函数resolve出来新的信息会传给consoleMsg函数中的参数data，由于函数consoleMsg没有resolve任何内容，所以getUseFriend这个函数得不到参数name,所以在consoleMsg函数的resolve中把name传过去,把需要传给下一个回调的信息通过resolve传过去 </p>
+<ul>
+<li>resolve作用： 把成功的数据传给下一个回调</li>
+<li>reject作用： 把失败的理由传给下一个回调</li>
+</ul>
+</blockquote>
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/14/%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0/" data-tooltip="理解函数">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 爱前端的安安. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/14/%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0/" data-tooltip="理解函数">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/06/21/Promise%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/test1.gif"/>
+        
+            <h4 id="about-card-name">爱前端的安安</h4>
+        
+            <h5 id="about-card-bio"><p>不忘初心，砥砺前行</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>web前端开发</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                shangHai
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/test.png');"></div>
+    </body>
+    <!--SCRIPTS-->
+
+<script src="/assets/js/scrip-gfmrkxcl0qohe3cfdgxhzvc0yrceqta8i4iix0txvn8q4o2adlqd5n0jmkvt.min.js"></script>
+<script href="/.css" src="/.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
