@@ -21,7 +21,7 @@
 <meta property="og:description" content="这篇博客是对Promise用法的一个解析，包括为什么要用Promise,具体用法和一些细节问题">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-21T14:09:41.000Z">
-<meta property="article:modified_time" content="2020-06-22T01:36:47.639Z">
+<meta property="article:modified_time" content="2020-06-22T01:38:13.371Z">
 <meta property="article:author" content="爱前端的安安">
 <meta property="article:tag" content="异步">
 <meta name="twitter:card" content="summary">
@@ -246,11 +246,11 @@
 
 
 <h4 id="Promise的使用"><a href="#Promise的使用" class="headerlink" title="Promise的使用"></a>Promise的使用</h4><ul>
-<li>简单用法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 将上面的例子改成Promise版,成功执行then的第一个 函数，失败执行第二个函数，规范了成功失败的执行，不存在嵌套了</span><br><span class="line">readFilePromise(&#39;c:\\1.tex&#39;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
-
-
-</li>
+<li>简单用法</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 将上面的例子改成Promise版,成功执行then的第一个 函数，失败执行第二个函数，规范了成功失败的执行，不存在嵌套了</span><br><span class="line">readFilePromise(&#39;c:\\1.tex&#39;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br><span class="line">  .then(function()&#123;&#125;, function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function getUserMsg() &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(&#39;第一次获取用户信息中......&#39;);</span><br><span class="line">    resolve(&#39;name: kitty&#39;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function consoleUserMsg(userMsg) &#123;</span><br><span class="line">  return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(userMsg);</span><br><span class="line">    resolve();</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getOtherMsg() &#123;</span><br><span class="line"> return new Promise(function(resolve, reject)&#123;</span><br><span class="line">    console.log(&#39;第二次获取用户信息中......&#39;);</span><br><span class="line">    resolve(&#39;name: lili&#39;)</span><br><span class="line"> &#125;)</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">getUserMsg()</span><br><span class="line">  .then(consoleUserMsg)</span><br><span class="line">  .then(getOtherMsg)</span><br><span class="line">  .then(consoleUserMsg)</span><br></pre></td></tr></table></figure>
 
 
