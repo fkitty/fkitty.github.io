@@ -21,7 +21,7 @@
 <meta property="og:description" content="这篇博客是对Promise用法的一个解析，包括为什么要用Promise,具体用法和一些细节问题">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-21T14:09:41.000Z">
-<meta property="article:modified_time" content="2020-06-23T15:16:50.582Z">
+<meta property="article:modified_time" content="2020-06-27T12:03:28.718Z">
 <meta property="article:author" content="爱前端的安安">
 <meta property="article:tag" content="异步">
 <meta name="twitter:card" content="summary">
@@ -270,11 +270,21 @@
 </ul>
 </blockquote>
 <ul>
-<li>async  await<blockquote>
-<p>是专门为promise发明的语法</p>
+<li>promise的细节<blockquote>
+<p>await是专门为promise发明的语法</p>
 </blockquote>
 </li>
 </ul>
+<blockquote>
+<p>出现的问题：其实then中的函数还是回调<br>，那怎样才没有回调呢？在返回promise的函数之前加一个await</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 上例执行函数中</span><br><span class="line">let getUserMsg &#x3D; await getUserMsg(&#39;haha&#39;);</span><br><span class="line">console.log(getUserMsg, &#39;使用await打印用户信息&#39;);</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">  let getUserMsg &#x3D; await getUserMsg(&#39;haha&#39;);</span><br><span class="line">  console.log(getUserMsg, &#39;使用await打印用户信息&#39;);  </span><br><span class="line">&#125;catch(error&#x2F;* 错误理由 *&#x2F;)&#123;</span><br><span class="line">  console.log(&#39;失败理由是&#39;, error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Promise的其他几个API</span><br><span class="line">1. catch-只处理错误</span><br><span class="line">getUserMsg(&#39;haha&#39;)</span><br><span class="line">  .then(null, function()&#123;&#125;)</span><br><span class="line">  &#x2F;&#x2F; 等价于</span><br><span class="line">  .catch(function()&#123;&#125;)</span><br><span class="line">  </span><br><span class="line">2. finally-不管成功还是失败都会调用</span><br><span class="line">getUserMsg(&#39;haha&#39;)</span><br><span class="line">  .then(f1, f1)</span><br><span class="line">  &#x2F;&#x2F; 等价于</span><br><span class="line">  .finally(f1)</span><br><span class="line"></span><br><span class="line">3. all-等多个Prmise都成功了再执行下一个Promise或回调</span><br><span class="line"></span><br><span class="line">4. race-与all相反，多个的Promise中有其中一个执行成功了，就执行下一个Promise获回调</span><br></pre></td></tr></table></figure>
             
                 
 
