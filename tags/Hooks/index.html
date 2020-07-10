@@ -205,6 +205,11 @@
 <li>首次渲染: <code>render(&lt;App /&gt;)</code>组件，App组件就会调用App函数，这时候会得到一个对象（虚拟Div）,react会把它转化成真实的Div，首次渲染就是把虚拟Div转化成真实Div的过程</li>
 <li>点击button的时候，函数<code>setN</code>会执行，内容是<code>n+1</code>,这个时候n就会从0变成1了，setN会更新页面，所以会再次<code>render(&lt;App /&gt;)</code>。所以每次更新UI ，App就运行一次，这时候会得到一个新的Div，react会把新的Div和就的Div做一个对比，看哪里有变化（DOM Diff）更新真Div</li>
 </ul>
+<p>问题来了：</p>
+<ul>
+<li>每次调用App,都会运行useState(0), 第一次运行和第二次运行<code>const [n, setN] = React.useState(0);</code>,这里的n是一样的吗？（根据打印验证是不同的）</li>
+<li>思考为什么会这样，useState到底做了什么，能使得n会变</li>
+</ul>
 
                     
                         
