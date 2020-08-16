@@ -6,24 +6,23 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="爱前端的安安">
-    <title>Redux上篇-组件通信（EventHub) - 爱前端的安安</title>
+    <title>Redux中篇-Redux是什么 - 爱前端的安安</title>
     <meta name="author" content="爱前端的安安">
     
     
         <link rel="icon" href="http://yoursite.com/assets/images/test.png">
     
     
-    <meta name="description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的事">
+    <meta name="description" content="不忘初心，砥砺前行">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Redux上篇-组件通信（EventHub)">
-<meta property="og:url" content="http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/index.html">
+<meta property="og:title" content="Redux中篇-Redux是什么">
+<meta property="og:url" content="http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
 <meta property="og:site_name" content="爱前端的安安">
-<meta property="og:description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的事">
+<meta property="og:description" content="不忘初心，砥砺前行">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-08-02T14:57:12.000Z">
-<meta property="article:modified_time" content="2020-08-12T07:41:23.996Z">
+<meta property="article:published_time" content="2020-08-16T15:11:40.000Z">
+<meta property="article:modified_time" content="2020-08-16T15:11:40.793Z">
 <meta property="article:author" content="爱前端的安安">
-<meta property="article:tag" content="数据流">
 <meta name="twitter:card" content="summary">
     
         <meta rel="publisher" content="https://plus.google.com/99999"/>
@@ -173,35 +172,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            Redux上篇-组件通信（EventHub)
+            Redux中篇-Redux是什么
         </h1>
     
     <div class="post-meta">
-    <time itemprop="datePublished" content="Sun Aug 02 2020 22:57:12 GMT+0800">
+    <time itemprop="datePublished" content="Sun Aug 16 2020 23:11:40 GMT+0800">
 	
-		    8月 02, 2020
+		    8月 16, 2020
     	
     </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/React/">React</a>
-
-
     
 </div>
 </div>
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>需求：实现如下图所示的组件结构之间任意组件之间进行通信<br>说明：每个组件都有一个共同的数据<br>分析：</p>
-<ul>
-<li>每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3</li>
-<li>测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState</li>
-<li>组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3</li>
-<li>如果用上述流程，让任意组件之间通行，那这样做的事情就太多了</li>
-</ul>
-
+            
             
                 
 
@@ -210,19 +196,12 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">标签</span><br/>
-                
-    <a class="tag tag--primary tag--small t-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%B5%81/" rel="tag">数据流</a>
-
-            </div>
-        
         <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/"  data-tooltip="Redux中篇-Redux是什么">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -230,7 +209,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/07/16/React-Hooks%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" data-tooltip="React Hooks使用总结">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/" data-tooltip="Redux上篇-组件通信（EventHub)">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -245,17 +224,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -293,7 +272,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/"  data-tooltip="Redux中篇-Redux是什么">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -301,7 +280,7 @@
             </li>
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/07/16/React-Hooks%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" data-tooltip="React Hooks使用总结">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/" data-tooltip="Redux上篇-组件通信（EventHub)">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right"></i>
@@ -316,17 +295,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -346,17 +325,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-Redux%E6%98%AF%E4%BB%80%E4%B9%88/">
                 <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
             </a>
         </li>
