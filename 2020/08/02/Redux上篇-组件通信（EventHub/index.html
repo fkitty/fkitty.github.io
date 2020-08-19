@@ -13,15 +13,15 @@
         <link rel="icon" href="http://yoursite.com/assets/images/test.png">
     
     
-    <meta name="description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的事">
+    <meta name="description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信 说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Redux上篇-组件通信（EventHub)">
 <meta property="og:url" content="http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/index.html">
 <meta property="og:site_name" content="爱前端的安安">
-<meta property="og:description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的事">
+<meta property="og:description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信 说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-02T14:57:12.000Z">
-<meta property="article:modified_time" content="2020-08-12T07:41:23.996Z">
+<meta property="article:modified_time" content="2020-08-19T15:13:55.811Z">
 <meta property="article:author" content="爱前端的安安">
 <meta property="article:tag" content="数据流">
 <meta name="twitter:card" content="summary">
@@ -194,12 +194,31 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>需求：实现如下图所示的组件结构之间任意组件之间进行通信<br>说明：每个组件都有一个共同的数据<br>分析：</p>
+            <p>需求：实现如下图所示的组件结构之间任意组件之间进行通信</p>
+<p>说明：每个组件都有一个共同的数据<br>分析：</p>
 <ul>
 <li>每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3</li>
 <li>测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState</li>
 <li>组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3</li>
 <li>如果用上述流程，让任意组件之间通行，那这样做的事情就太多了</li>
+</ul>
+<p>思路：</p>
+<ul>
+<li>假设有一个中间的传递者，让他和所有的组件交互</li>
+</ul>
+<p>实现：</p>
+<ul>
+<li>经典的设计模式，发布订阅模式（eventHub）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var evnetHub &#x3D; &#123;</span><br><span class="line">  trigger()&#123;&#125;, &#x2F;&#x2F; 发布</span><br><span class="line">  on()&#123;&#125;, &#x2F;&#x2F; 订阅</span><br><span class="line">&#125;</span><br><span class="line">类似与：button.on(&#39;click&#39;, function()&#123;&#125;)) &#x2F;&#x2F; 订阅了button的click事件，一旦有这个事件，就会通知我，调用这个函数</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>解析：</p>
+<ul>
+<li>发布订阅是什么意思呢？<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">发布：通知是什么动作</span><br><span class="line">订阅：谁在监听，谁就会收到订阅</span><br><span class="line">只要发布和订阅了同一事件，这两个事件之间就可以交互</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
 </ul>
 
             
