@@ -13,18 +13,21 @@
         <link rel="icon" href="http://yoursite.com/assets/images/test.png">
     
     
-    <meta name="description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信 说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的">
+    <meta name="description" content="这是一篇使用eventHub来实现单数据流的方式进行组件通信">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Redux上篇-组件通信（EventHub)">
 <meta property="og:url" content="http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/index.html">
 <meta property="og:site_name" content="爱前端的安安">
-<meta property="og:description" content="需求：实现如下图所示的组件结构之间任意组件之间进行通信 说明：每个组件都有一个共同的数据分析：  每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3 测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState 组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3 如果用上述流程，让任意组件之间通行，那这样做的">
+<meta property="og:description" content="这是一篇使用eventHub来实现单数据流的方式进行组件通信">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/r1.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/r2.jpeg">
 <meta property="article:published_time" content="2020-08-02T14:57:12.000Z">
-<meta property="article:modified_time" content="2020-08-19T15:13:55.811Z">
+<meta property="article:modified_time" content="2020-08-20T10:25:16.288Z">
 <meta property="article:author" content="爱前端的安安">
-<meta property="article:tag" content="数据流">
+<meta property="article:tag" content="通信">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/r1.jpeg">
     
         <meta rel="publisher" content="https://plus.google.com/99999"/>
     
@@ -194,21 +197,22 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>需求：实现如下图所示的组件结构之间任意组件之间进行通信</p>
+            <!-- excerpt -->
+
+<h4 id="需求：使用eventHub实现如下图所示的组件结构之间任意组件之间进行通信"><a href="#需求：使用eventHub实现如下图所示的组件结构之间任意组件之间进行通信" class="headerlink" title="需求：使用eventHub实现如下图所示的组件结构之间任意组件之间进行通信"></a>需求：使用eventHub实现如下图所示的组件结构之间任意组件之间进行通信</h4><p><img src="/images/r1.jpeg" alt="image"></p>
 <p>说明：每个组件都有一个共同的数据<br>分析：</p>
 <ul>
-<li>每个组件都有一个共同的数据，组件2在其内部改变数据之后，怎么通知组件3</li>
-<li>测试得知，当组件2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState</li>
-<li>组件2和组件3之间通信流程：C2-&gt;P1-&gt;App-&gt;P2-&gt;C3</li>
+<li>每个组件都有一个共同的数据，组件s2在其内部改变数据之后，怎么通知组件s3</li>
+<li>测试得知，当组件s2改变数据之后，其他组件都不知道，因为它们没有在各自的内部setState</li>
+<li>组件s2和组件s3之间通信流程：s2-&gt;P1-&gt;App-&gt;P2-&gt;s3</li>
 <li>如果用上述流程，让任意组件之间通行，那这样做的事情就太多了</li>
 </ul>
-<p>思路：</p>
-<ul>
+<h4 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h4><ul>
 <li>假设有一个中间的传递者，让他和所有的组件交互</li>
 </ul>
-<p>实现：</p>
+<p>举例：</p>
 <ul>
-<li>经典的设计模式，发布订阅模式（eventHub）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var evnetHub &#x3D; &#123;</span><br><span class="line">  trigger()&#123;&#125;, &#x2F;&#x2F; 发布</span><br><span class="line">  on()&#123;&#125;, &#x2F;&#x2F; 订阅</span><br><span class="line">&#125;</span><br><span class="line">类似与：button.on(&#39;click&#39;, function()&#123;&#125;)) &#x2F;&#x2F; 订阅了button的click事件，一旦有这个事件，就会通知我，调用这个函数</span><br></pre></td></tr></table></figure>
+<li>经典的设计模式，发布订阅模式（eventHub）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var evnetHub &#x3D; &#123;</span><br><span class="line">  trigger()&#123;&#125;, &#x2F;&#x2F; 发布</span><br><span class="line">  on()&#123;&#125;, &#x2F;&#x2F; 订阅</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 类似于</span><br><span class="line">button.on(&#39;click&#39;, function(data)&#123; data &#x3D;&#x3D;&#x3D; &#39;x&#39;&#125;) &#x2F;&#x2F; 订阅（订阅了button的click事件，一旦有这个事件，就会通知我，调用这个</span><br><span class="line">函数）</span><br><span class="line">&#x2F;&#x2F; 可以在任何地方去发布这个事件</span><br><span class="line">button.trigger(&#39;click&#39;, &#39;x&#39;) &#x2F;&#x2F; 发布    click叫事件名称</span><br><span class="line"></span><br><span class="line">1、当用户点击了按钮，浏览器就会发布click这个事件</span><br><span class="line">2、 如果订阅了这个事件，就会执行这个函数</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -216,11 +220,32 @@
 <ul>
 <li>发布订阅是什么意思呢？<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">发布：通知是什么动作</span><br><span class="line">订阅：谁在监听，谁就会收到订阅</span><br><span class="line">只要发布和订阅了同一事件，这两个事件之间就可以交互</span><br></pre></td></tr></table></figure>
 
-
+</li>
+</ul>
+<h4 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h4><ul>
+<li><p>1、实现一个事件中心（在APP中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var fnLists &#x3D; &#123;&#125;;</span><br><span class="line">var evnetHub &#x3D; &#123;</span><br><span class="line">  trigger(eventName, data)&#123;</span><br><span class="line">    &#x2F;&#x2F; 用户说&#39;这是一个测试&#39; 要把fnList中的所有函数都要调一遍</span><br><span class="line">    let fnList &#x3D; fnLists[eventName];</span><br><span class="line">    if(!fnList)&#123;return&#125;</span><br><span class="line">    for(let i &#x3D; 0; i &lt; fnList.length; i++)&#123;</span><br><span class="line">      fnList[i](data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;, &#x2F;&#x2F; 发布 事件名称和数据</span><br><span class="line">  on(eventName, fn)&#123;</span><br><span class="line">    &#x2F;&#x2F; 其实不会调用和这个函数，是把函数放到一个数组中</span><br><span class="line">    if(!fnLists[eventName])&#123;</span><br><span class="line">      fnLists[eventName] &#x3D; [];</span><br><span class="line">    &#125;</span><br><span class="line">    fnLists[eventName].push(fn);</span><br><span class="line">  &#125;, &#x2F;&#x2F; 订阅 接受一个事件名称和函数，事件触发之后就会调用这个函数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 当在执行这句代码的时候，是把fn1放到fnList中</span><br><span class="line">evnetHub.on(&#39;这是一个测试&#39;, function fn1()&#123;&#125;)</span><br><span class="line">evnetHub.trigger(&#39;这是一个测试&#39;, 100)</span><br></pre></td></tr></table></figure></li>
+<li><p>2、监听’这是一个测试’事件（在APP中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let money &#x3D; &#123;</span><br><span class="line">  amount: 1000,</span><br><span class="line">&#125;</span><br><span class="line">var test &#x3D; &#123;</span><br><span class="line">  init()&#123; &#x2F;&#x2F; 初始化方法，监听eventHub，只要监听到这个方法就去执行它的函数</span><br><span class="line">    evnetHub(&#39;这是一个测试&#39;, function(data)&#123;</span><br><span class="line">      money.amount -&#x3D; data; &#x2F;&#x2F; 之后重新render</span><br><span class="line">      &#x2F;&#x2F; render();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">test.init();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3、提出申请 ‘这是一个测试’（在S2组件中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">  evnetHub.trigger(&#39;这是一个测试&#39;, 100);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><ol>
+<li>这样就用eventHub实现了组件之间的通信，使得数据同步，你会发现，这种实现方式的数据流是单向的（只有下没有上），避免了在通行的时候数据流有上有下的情况，如图：<br><img src="/images/r2.jpeg" alt="image"><ul>
+<li>在上图中实线代表数据，虚线代表事件</li>
+<li>当有一个组件发了一个事件给中间的传递者，他处理之后通知到APP，然后APP把数据通过props一个一个传递下去</li>
+<li>在传递的过程中发现有哪个组件需要更新，就会更新哪个组件，如果不需要更新就不会更新</li>
+</ul>
+</li>
+<li>原则：<ul>
+<li>所有的数据放在App中，各个子组件中通过props获取，子组件中不能随意修改，所有的数据都是统一的</li>
+</ul>
+</li>
+</ol>
+<p>下篇中使用redux改写eventHub模式</p>
             
                 
 
@@ -232,7 +257,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">标签</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%B5%81/" rel="tag">数据流</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a>
 
             </div>
         
