@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爱前端的安安">
+    <title>Redux中篇-使用Redux代替eventHub - 爱前端的安安</title>
+    <meta name="author" content="爱前端的安安">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/test.png">
+    
+    
+    <meta name="description" content="本篇文章继上篇文章，使用redux改写eventHub模式">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Redux中篇-使用Redux代替eventHub">
+<meta property="og:url" content="http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/index.html">
+<meta property="og:site_name" content="爱前端的安安">
+<meta property="og:description" content="本篇文章继上篇文章，使用redux改写eventHub模式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-16T15:11:40.000Z">
+<meta property="article:modified_time" content="2020-08-23T03:37:29.753Z">
+<meta property="article:author" content="爱前端的安安">
+<meta property="article:tag" content="通信">
+<meta name="twitter:card" content="summary">
+    
+        <meta rel="publisher" content="https://plus.google.com/99999"/>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/test1.gif"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-ejlztp1tasruqfvoz6xmgqng0anzae8ox7cqjj5yibieqgcmhe9fwxfae6zj.min.css">
+<link rel="stylesheet" href="/.css" src="/.js">
+
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/%20">爱前端的安安</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/test1.gif"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/test1.gif"/>
+            </a>
+            <span class="sidebar-profile-name">爱前端的安安</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/"
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Redux中篇-使用Redux代替eventHub
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Sun Aug 16 2020 23:11:40 GMT+0800">
+	
+		    8月 16, 2020
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/React/">React</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+
+<p>在上一篇文章中，使用eventHub的方式实现了组件之间的通信，这种模式的特点：</p>
+<ul>
+<li>所有的动作都要通过事件来沟通</li>
+<li>数据必须放在顶层（redux所提倡的，所有的数据归到一个地方，然后把这个数据传给最顶层的组件）</li>
+</ul>
+<p>那么问题来了，如果继续使用这种模式，数据很多的时候怎么办呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 假如是这样的数据</span><br><span class="line">var money &#x3D; &#123;</span><br><span class="line">  amount: 1000,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var user &#x3D; &#123;</span><br><span class="line">  id: &#39;123123&#39;,</span><br><span class="line">  nickName: &#39;今天周五&#39;,</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#x2F;&#x2F; 等等等...</span><br></pre></td></tr></table></figure>
+
+<p>如果继续使用这种模式，数据就会很分散了，为了解决这个问题，一个著名的概念<code>store</code>出现了，它会把数据都提到一个地方，store表示<code>所有的数据，可以理解为存储数据的地方</code>，示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 使用store改写数据（app-把整个store传给整个组件）</span><br><span class="line">var money &#x3D; &#123;</span><br><span class="line">  amount: 1000,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var user &#x3D; &#123;</span><br><span class="line">  id: &#39;123123&#39;,</span><br><span class="line">  nickName: &#39;今天周五&#39;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var store &#x3D; &#123;</span><br><span class="line">    money:money,</span><br><span class="line">    user:user,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>找到了store的对应关系，那接下来，action是什么呢？想做一件事情，这个事情其实是一个动作，在S2组件中<code>evnetHub.trigger(&#39;这是一个测试&#39;, 100);</code>这就是一个action,其中trigger的事件名’这是一个测试’就是action-type，相应的100叫action-payload。</p>
+<p>到这里可以发现，redux把eventHub模式中的事件，都统一换了一个名字。</p>
+<p>接下来就是reducer,什么是reducer：<code>对数据的变动</code>,示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var test &#x3D; &#123;</span><br><span class="line">  init()&#123; &#x2F;&#x2F;</span><br><span class="line">    evnetHub.on(&#39;这是一个测试&#39;, function(data)&#123; &#x2F;&#x2F; subscribe(订阅)</span><br><span class="line">      console.log(money, &#39;data&#x3D;&#x3D;&#x3D;&#x3D;&#39;);</span><br><span class="line">      money.amount -&#x3D; data; &#x2F;&#x2F; reducer:对数据的变动</span><br><span class="line">      &#x2F;&#x2F; 之后重新render</span><br><span class="line">      &#x2F;&#x2F; render();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">test.init();</span><br></pre></td></tr></table></figure>
+
+<p>这里简单总结一下：<br>  store: 存数据的地方，就是一个对象<br>  reducer: 对数据的操作<br>  action(type, pyload)<br>  subscribe: event.on(订阅)<br>  dispatch: event.trigger(发布)</p>
+<p>参照<a href="https://www.redux.org.cn/docs/introduction/Examples.html" target="_blank" rel="noopener">官方示例</a>，进行改写<br>改写数据:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore &#125; from &#39;redux&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个reducer</span><br><span class="line">let reducers &#x3D; (state, action) &#x3D;&gt; &#123;</span><br><span class="line">  state &#x3D; state || &#123;</span><br><span class="line">    money: &#123;</span><br><span class="line">      amount: 100000,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#39;这是一个测试&#39;:</span><br><span class="line">      return &#123;</span><br><span class="line">        money: &#123;</span><br><span class="line">          amount: state.money.amount - action.payload,</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    case &#39;DECREMENT&#39;:</span><br><span class="line">      return state - 1</span><br><span class="line">    default:</span><br><span class="line">      return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取store</span><br><span class="line">const store &#x3D; createStore(reducers);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 把数据传给App</span><br><span class="line">&lt;App store&#x3D;&#123;store.getState()&#125; &#x2F;&gt;</span><br><span class="line">&#x2F;&#x2F; 顶级组件也不用state,不要自己的state, 获取的时候从prop中获取</span><br></pre></td></tr></table></figure>
+
+<p>改写发布：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; evnetHub.trigger(&#39;这是一个测试, 100 );  &#x2F;&#x2F; 用下面的一行改写</span><br><span class="line"></span><br><span class="line">  store.dispatch(&#123; type: &#39;这是一个测试&#39;, payload: 100 &#125;) &#x2F;&#x2F;  dispatch的东西叫action   触发的这个事件由谁来接管呢（在reducer中更改state的状态）</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新render</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 只要状态变更了了，就会触发subscribe</span><br><span class="line">render</span><br><span class="line">store.subscribe(render)</span><br></pre></td></tr></table></figure>
+
+
+<p>比较eventHub模式和redux:</p>
+<ul>
+<li>相同点: 把最初的数据放到顶级的store里面，如果所有组件想用的话，就一层一层的把数据传下去，每一层都要传，如果有几十层几百层，就要传几十次几百次</li>
+<li>不同点：<br>对于发布- eventHub的做法：evnetHub.trigger(‘这是一个测试, 100 )，redux的做法：首先dispatch(就是触发)一个action,action的type就是你要做的动作<code>这是一个测试</code>,action的payload是你的数据，触发这个action之后，数据由reducers来监听，这个reducers就是一个函数，就是相当于eventHub模式中的中间者，他会得到之前的state和触发的动作，需要返回最新的数据</li>
+</ul>
+<p>redux优点：</p>
+<ul>
+<li>将event归类，不能瞎命名event,把事件名称，和参数做了一个约束，必须每一个事件都给一个事件名和payload,所有的事件都要列出来，不列出来就不接受</li>
+<li>所有数据是只读的，任何一个组件不能修改根级的数据，但是没有办法禁止</li>
+</ul>
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/" data-tooltip="Redux上篇-组件通信（EventHub)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 爱前端的安安. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/" data-tooltip="Redux上篇-组件通信（EventHub)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/test1.gif"/>
+        
+            <h4 id="about-card-name">爱前端的安安</h4>
+        
+            <h5 id="about-card-bio"><p>不忘初心，砥砺前行</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>web前端开发</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                shangHai
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/test.png');"></div>
+    </body>
+    <!--SCRIPTS-->
+
+<script src="/assets/js/scrip-gfmrkxcl0qohe3cfdgxhzvc0yrceqta8i4iix0txvn8q4o2adlqd5n0jmkvt.min.js"></script>
+<script href="/.css" src="/.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
