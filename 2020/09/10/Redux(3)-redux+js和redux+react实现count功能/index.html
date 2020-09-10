@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爱前端的安安">
+    <title>Redux(3)-redux+js和redux+react 实现count功能 - 爱前端的安安</title>
+    <meta name="author" content="爱前端的安安">
+    
+    
+        <link rel="icon" href="http://yoursite.com/assets/images/test.png">
+    
+    
+    <meta name="description" content="本篇文章参照redux官网示例，采用redux+js和实现count功能，并用redux+react改写后进行比较">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Redux(3)-redux+js和redux+react 实现count功能">
+<meta property="og:url" content="http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="爱前端的安安">
+<meta property="og:description" content="本篇文章参照redux官网示例，采用redux+js和实现count功能，并用redux+react改写后进行比较">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-10T03:27:06.000Z">
+<meta property="article:modified_time" content="2020-09-10T03:32:43.185Z">
+<meta property="article:author" content="爱前端的安安">
+<meta property="article:tag" content="通信">
+<meta name="twitter:card" content="summary">
+    
+        <meta rel="publisher" content="https://plus.google.com/99999"/>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/test1.gif"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-ejlztp1tasruqfvoz6xmgqng0anzae8ox7cqjj5yibieqgcmhe9fwxfae6zj.min.css">
+<link rel="stylesheet" href="/.css" src="/.js">
+
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/%20">爱前端的安安</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/test1.gif"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/test1.gif"/>
+            </a>
+            <span class="sidebar-profile-name">爱前端的安安</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/"
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Redux(3)-redux+js和redux+react 实现count功能
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Thu Sep 10 2020 11:27:06 GMT+0800">
+	
+		    9月 10, 2020
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/React/">React</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt -->
+
+<p>redux官网<br><a href="https://www.redux.org.cn/" target="_blank" rel="noopener">查看官网</a></p>
+<p>可以看到一些或许来说比较陌生的词汇，’flux演变而来’、’状态管理’等等，可能对一个新手来说，可能会又去了解下这些相对来说陌生的词汇，不管怎么变，，它产生的动机和背景是不变的。在这里我觉得直接看示例，就能很好的来理解背后的故事。这先从两个栗子开始</p>
+<p>示例1：<a href="https://github.com/reduxjs/redux/blob/master/examples/counter-vanilla/index.html" target="_blank" rel="noopener">Counter Vanilla</a></p>
+<ul>
+<li>说明：使用Vanilla js(原生js)结合redux实现数数功能</li>
+</ul>
+<p>代码逻辑部分如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 加1 改变state，把它从0变成1</span><br><span class="line">function add1()&#123;</span><br><span class="line">   store.dispatch(&#123;</span><br><span class="line">     type: &#39;add&#39;, &#x2F;&#x2F; 1、dispatch一个action（和action-type对应）</span><br><span class="line">     payload: 1,</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 加2</span><br><span class="line">function add2()&#123;</span><br><span class="line">  store.dispatch(&#123;</span><br><span class="line">     type: &#39;add&#39;, &#x2F;&#x2F; 1、dispatch一个action（和action-type对应）</span><br><span class="line">     payload: 2,</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 如果单数就加1</span><br><span class="line">function addIf()&#123;</span><br><span class="line">  var oldState &#x3D; store.getState(); &#x2F;&#x2F; 获取state</span><br><span class="line">  if (oldState % 2 &#x3D;&#x3D;&#x3D; 1) &#123;</span><br><span class="line">    store.dispatch(&#123;</span><br><span class="line">      type: &#39;add&#39;,</span><br><span class="line">      payload: 1,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 2秒后加1</span><br><span class="line">function addAsync() &#123;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 方法一</span><br><span class="line">  window.setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">    store.dispatch(&#123;</span><br><span class="line">      type: &#39;add&#39;,</span><br><span class="line">      payload: 1,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, 2000)</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 方法二</span><br><span class="line">  派发一个异步，在stateChange中</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function render(store)&#123;</span><br><span class="line">  var app &#x3D; document.querySelector(&#39;#app&#39;);</span><br><span class="line">  app.innerHTML &#x3D; &#96;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      你点击了&lt;span id&#x3D;&quot;value&quot;&gt;$&#123;store.getState()&#125;&lt;&#x2F;span&gt;次</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button id&#x3D;&quot;add1&quot; onclick&#x3D;&quot;add1()&quot;&gt;+1&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button id&#x3D;&quot;add2&quot; onclick&#x3D;&quot;add2()&quot;&gt;+2&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button id&#x3D;&quot;add1IfOdd&quot; onclick&#x3D;&quot;addIf()&quot;&gt;如果是单数就+1&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;button id&#x3D;&quot;add1After2Sec&quot; onclick&#x3D;&quot;addAsync()&quot;&gt;两秒钟后+1&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&#96;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; store的变化如何才走(如何去改变state)</span><br><span class="line">function stateChanger(state, action)&#123;</span><br><span class="line">   if (typeof state &#x3D;&#x3D;&#x3D; &#39;undefined&#39;) &#123;</span><br><span class="line">     return 0</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">    if(action.type &#x3D;&#x3D;&#x3D; &#39;add&#39;)&#123;</span><br><span class="line">        </span><br><span class="line">      &lt;!--var newState &#x3D; state + 1;--&gt;</span><br><span class="line">      &#x2F;&#x2F; 使用payload,使加1和加2共用</span><br><span class="line">      var newState &#x3D; state + action.payload</span><br><span class="line">      </span><br><span class="line">      return newState; &#x2F;&#x2F; 2、根据操作生成新的state 触发一个事件</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return state;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个store</span><br><span class="line">var store &#x3D; Redux.createStore(stateChanger);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">render(store)</span><br><span class="line">&#x2F;&#x2F; store.subscribe(render(store)) &#x2F;&#x2F; 监听(订阅)store的变化，变了就render</span><br><span class="line">store.subscribe(() &#x3D;&gt; &#123;</span><br><span class="line">  render(store) &#x2F;&#x2F; 3、接受到事件，重新render</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>示例2：<a href="https://github.com/reduxjs/redux/tree/master/examples/counter" target="_blank" rel="noopener">使用redux+react改写Counter </a></p>
+<ul>
+<li>说明：使用redux+react改写示例1，实现相同功能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">需要工具：create-react-app</span><br><span class="line">安装redux</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; App.js</span><br><span class="line">class App extends Component&#123;</span><br><span class="line"></span><br><span class="line">  add1()&#123;</span><br><span class="line">    this.props.onAdd1();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  add2()&#123;</span><br><span class="line">    this.props.onAdd2();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  add3()&#123;</span><br><span class="line">    this.props.onAdd3();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  add4()&#123;</span><br><span class="line">    this.props.onAdd4();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  render()&#123;</span><br><span class="line">    return(</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;span&gt;你点击了&#123;this.props.value&#125;次&lt;span&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;button id&#x3D;&quot;add1&quot; onClick&#x3D;&#123;() &#x3D;&gt; this.add1()&#125;&gt;+1&lt;&#x2F;button&gt;</span><br><span class="line">          &lt;button id&#x3D;&quot;add2&quot; onClick&#x3D;&#123;() &#x3D;&gt; this.add2()&#125;&gt;+2&lt;&#x2F;button&gt;</span><br><span class="line">          &lt;button id&#x3D;&quot;add1IfOdd&quot; onClick&#x3D;&#123;() &#x3D;&gt; this.add3()&#125;&gt;如果是单数就+1&lt;&#x2F;button&gt;</span><br><span class="line">          &lt;button id&#x3D;&quot;add1After2Sec&quot; onClick&#x3D;&#123;() &#x3D;&gt; this.add4()&#125;&gt;两秒钟后+1&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; index.js</span><br><span class="line">&#x2F;&#x2F; 这里只列出部分代码</span><br><span class="line">import &#123; createStore &#125; from &#39;redux&#39;;</span><br><span class="line"></span><br><span class="line">const stateChanger &#x3D; (state, action) &#x3D;&gt; &#123;</span><br><span class="line">  if (typeof state &#x3D;&#x3D;&#x3D; &#39;undefined&#39;) &#123;</span><br><span class="line">    return 0</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    if (action.type &#x3D;&#x3D;&#x3D; &#39;add&#39;) &#123;</span><br><span class="line">      var newState &#x3D; state + action.payload;</span><br><span class="line">      return newState; &#x2F;&#x2F; 2、根据操作生成新的state 触发一个事件</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">      return state;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const store &#x3D; createStore(stateChanger);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">render();</span><br><span class="line">store.subscribe(() &#x3D;&gt; &#123; &#x2F;&#x2F; 更新render</span><br><span class="line">  render();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function add3() &#123;</span><br><span class="line">  if( store.getState() % 2 &#x3D;&#x3D;&#x3D; 1)&#123;</span><br><span class="line">    store.dispatch(&#123;</span><br><span class="line">      type: &#39;add&#39;,</span><br><span class="line">      payload: 1,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function add4() &#123;</span><br><span class="line">  window.setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">    store.dispatch(&#123;</span><br><span class="line">      type: &#39;add&#39;,</span><br><span class="line">      payload: 1,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, 2000)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function render() &#123;</span><br><span class="line">  ReactDOM.render(</span><br><span class="line">    &lt;React.StrictMode&gt;</span><br><span class="line">      &lt;App</span><br><span class="line">        value&#x3D;&#123;store.getState()&#125; &#x2F;* 把store放到render中 *&#x2F;</span><br><span class="line">        onAdd1&#x3D;&#123;() &#x3D;&gt; &#123;store.dispatch(&#123;type: &#39;add&#39;, payload: 1&#125;)&#125;&#125;</span><br><span class="line">        onAdd2&#x3D;&#123;() &#x3D;&gt; &#123;store.dispatch(&#123;type: &#39;add&#39;, payload: 2&#125;)&#125;&#125;</span><br><span class="line">        onAdd3&#x3D;&#123;add3&#125;</span><br><span class="line">        onAdd4&#x3D;&#123;add4&#125;</span><br><span class="line">      &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;React.StrictMode&gt;,</span><br><span class="line">    document.getElementById(&#39;root&#39;)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个问题，每次都要调用父组件传的方法，最后再去通知APP更新store，尝试优化：直接将store传给子元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; App.js</span><br><span class="line">&lt;App</span><br><span class="line">  store&#x3D;&#123;store&#125;</span><br><span class="line">&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; index.js</span><br><span class="line">add1()&#123;</span><br><span class="line">  const &#123; store &#125; &#x3D; this.props;</span><br><span class="line">  store.dispatch(&#123;</span><br><span class="line">    type: &#39;add&#39;,</span><br><span class="line">    payload: 1,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这样不需要一层一层往上调，但需要一层一层的往下传，这样也相当于没有任何提升</p>
+<h4 id="和栗1和栗2做个对比："><a href="#和栗1和栗2做个对比：" class="headerlink" title="和栗1和栗2做个对比："></a>和栗1和栗2做个对比：</h4><ul>
+<li>栗2重新渲染的时候，不需要整体更新DOM，栗1是每次都会整体更新</li>
+<li>尝试优化无效，虽然不用每次调父元素，但是要每次传给子元素</li>
+<li>每一层调用父亲的钩子，父亲的再调用父亲的，最后调到store所在的作用域；或者把store每次往下传，让每个子元素访问。这两种方式该如何选择？有更好的解决方案吗？react为什么没有内置redux?</li>
+</ul>
+<p>下篇继续：如何解决上述问题，react-redux的出现</p>
+            
+                
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/10/redux-js%E5%92%8Credux-react-%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/" data-tooltip="Redux(3) redux+js和redux+react 实现count功能">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 爱前端的安安. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/10/redux-js%E5%92%8Credux-react-%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/" data-tooltip="Redux(3) redux+js和redux+react 实现count功能">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/09/10/Redux(3)-redux+js%E5%92%8Credux+react%E5%AE%9E%E7%8E%B0count%E5%8A%9F%E8%83%BD/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/test1.gif"/>
+        
+            <h4 id="about-card-name">爱前端的安安</h4>
+        
+            <h5 id="about-card-bio"><p>不忘初心，砥砺前行</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>web前端开发</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                shangHai
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/test.png');"></div>
+    </body>
+    <!--SCRIPTS-->
+
+<script src="/assets/js/scrip-gfmrkxcl0qohe3cfdgxhzvc0yrceqta8i4iix0txvn8q4o2adlqd5n0jmkvt.min.js"></script>
+<script href="/.css" src="/.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

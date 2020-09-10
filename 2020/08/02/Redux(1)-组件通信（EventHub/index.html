@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="爱前端的安安">
-    <title>Redux上篇-组件通信（EventHub) - 爱前端的安安</title>
+    <title>Redux(1)-组件通信（EventHub) - 爱前端的安安</title>
     <meta name="author" content="爱前端的安安">
     
     
@@ -15,15 +15,15 @@
     
     <meta name="description" content="这是一篇使用eventHub来实现单数据流的方式进行组件通信">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Redux上篇-组件通信（EventHub)">
-<meta property="og:url" content="http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/index.html">
+<meta property="og:title" content="Redux(1)-组件通信（EventHub)">
+<meta property="og:url" content="http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/index.html">
 <meta property="og:site_name" content="爱前端的安安">
 <meta property="og:description" content="这是一篇使用eventHub来实现单数据流的方式进行组件通信">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/r1.jpeg">
 <meta property="og:image" content="http://yoursite.com/images/r2.jpeg">
 <meta property="article:published_time" content="2020-08-02T14:57:12.000Z">
-<meta property="article:modified_time" content="2020-08-20T10:25:16.288Z">
+<meta property="article:modified_time" content="2020-09-10T03:29:31.084Z">
 <meta property="article:author" content="爱前端的安安">
 <meta property="article:tag" content="通信">
 <meta name="twitter:card" content="summary">
@@ -176,7 +176,7 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            Redux上篇-组件通信（EventHub)
+            Redux(1)-组件通信（EventHub)
         </h1>
     
     <div class="post-meta">
@@ -266,7 +266,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/"  data-tooltip="Redux中篇-使用Redux代替eventHub">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux(2)-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/"  data-tooltip="Redux(2)-使用Redux代替eventHub">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -289,17 +289,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -337,7 +337,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux%E4%B8%AD%E7%AF%87-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/"  data-tooltip="Redux中篇-使用Redux代替eventHub">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/16/Redux(2)-%E4%BD%BF%E7%94%A8Redux%E4%BB%A3%E6%9B%BFeventHub/"  data-tooltip="Redux(2)-使用Redux代替eventHub">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -360,17 +360,17 @@
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-google-plus"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-facebook-official"></i>
             </a>
         </li>
         <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
@@ -390,17 +390,17 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="3">
     <ul class="share-options">
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
             </a>
         </li>
         <li class="share-option">
-            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux%E4%B8%8A%E7%AF%87-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2020/08/02/Redux(1)-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%EF%BC%88EventHub/">
                 <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
             </a>
         </li>
