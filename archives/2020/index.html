@@ -169,6 +169,91 @@
 <section class="postShorten-group main-content-wrap">
     
     
+    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2020/09/11/react-redux%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                            react-redux的使用
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" content="Fri Sep 11 2020 23:23:29 GMT+0800">
+	
+		    9月 11, 2020
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/React/">React</a>
+
+
+    
+</div>
+            </div>
+            
+            
+                <div class="postShorten-content" itemprop="articleBody">
+                    <p>解决了随时访问store,又不会出现混乱</p>
+<p>文档地址：<a href="https://react-redux.js.org/5.x/api" target="_blank" rel="noopener">https://react-redux.js.org/5.x/api</a></p>
+<h4 id="常用的API"><a href="#常用的API" class="headerlink" title="常用的API"></a>常用的API</h4><ul>
+<li>Provider</li>
+<li>connect 「连接UI组件和容器组件(store)」</li>
+</ul>
+<h4 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h4><h5 id="1-安装react-redux"><a href="#1-安装react-redux" class="headerlink" title="1. 安装react-redux"></a>1. 安装react-redux</h5><h5 id="2-使用Provider把App包起来，把store传给Provider"><a href="#2-使用Provider把App包起来，把store传给Provider" class="headerlink" title="2. 使用Provider把App包起来，把store传给Provider"></a>2. 使用Provider把App包起来，把store传给Provider</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Provider store&#x3D;&#123;store&#125;&gt;</span><br><span class="line">  &lt;App &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Provider&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="3-App获取store，获取初始值"><a href="#3-App获取store，获取初始值" class="headerlink" title="3. App获取store，获取初始值"></a>3. App获取store，获取初始值</h5><blockquote>
+<p>App中调用connect，注意connect的调用方式，它接受两次参数，怎样让一个函数接受两次参数呢？只要让这个函数return出一个函数，<a href="https://jsbin.com/tonesezegi/edit?js,console,output" target="_blank" rel="noopener">这里是一个测试的例子</a>，为什么connect可以调两次，因为他返回了一个新的函数，他会把第一个参数，第二个参数结合起来之后，产生一些魔法</p>
+</blockquote>
+<blockquote>
+<p>在这里<code>connect(1)</code>(2)，高亮部分是一个偏函数（因为它的参数不全）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; connect(x)(App); &#x2F;&#x2F; 第一个参数，第二个参数</span><br><span class="line">&#x2F;&#x2F; export default App</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正确的</span><br><span class="line">export default connect(getPartialStore)(App);</span><br><span class="line"></span><br><span class="line">如果发现函数getPartialStore没有执行，查看导出方式是否正确</span><br><span class="line">connect被函数getPartialStore和App结合起来，这个结合起来的东西，才是我们想要的东西，</span><br><span class="line">所以App不能再导出之前的App组件了，需要导出connect之后的组件，函数getPartialStore才会被调用</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取部分store 拿出state中的值，放到this.props中</span><br><span class="line">function getPartialStore(state)&#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    n: state.n,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 相应的stateChanger中初始值类型保持一致</span><br><span class="line">if (typeof state &#x3D;&#x3D;&#x3D; &#39;undefined&#39;) &#123;</span><br><span class="line">return &#123;n: 0&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; App中获取初始值</span><br><span class="line">this.props.n</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-实现加1"><a href="#4-实现加1" class="headerlink" title="4. 实现加1"></a>4. 实现加1</h5><blockquote>
+<p>这时候，需要给connect传另一个参数，它是一个对象，生成一个action</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 需要生成哪些action</span><br><span class="line">const actionCreator &#x3D; &#123;</span><br><span class="line">  add1: () &#x3D;&gt; &#123;</span><br><span class="line">    return&#123;</span><br><span class="line">      type: &#39;add&#39;,</span><br><span class="line">      payload: 1,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 新的state和旧的state是一样的结构</span><br><span class="line"> if (action.type &#x3D;&#x3D;&#x3D; &#39;add&#39;) &#123;</span><br><span class="line">  &#x2F;&#x2F; var newState &#x3D; state + action.payload;</span><br><span class="line">  var newState &#x3D; &#123;n: state.n + action.payload&#125;; </span><br><span class="line">  return newState;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 把这个对象传给connect的第二个参数</span><br><span class="line">export default connect(getPartialStore, actionCreator)(App);</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结一下："><a href="#总结一下：" class="headerlink" title="总结一下："></a>总结一下：</h5><p>这里使用第三种方式（react-reudx）实现了count中的加1功能，在App中使用connect，不需要获取整个store</p>
+<ul>
+<li>connect中的参数<ul>
+<li>第一个参数：App需要获取哪些store的state</li>
+<li>第二个参数：需要生成哪些action</li>
+<li>connect把数据(初始状态)和action(状态变更)还有组件组合起来，产生一些魔法</li>
+</ul>
+</li>
+<li>梳理一下从获取n到更新n的过程（不是直接更新自己的n）：<ul>
+<li>通过this.props.add1(在connect的第二个参数中生产)去触发一个action</li>
+<li>action会触发一个新的state</li>
+<li>新的state通过Provider传到App</li>
+<li>App再重新获取n，n再重新渲染到页面</li>
+</ul>
+</li>
+</ul>
+
+                    
+                        
+
+                    
+                    
+                        <p>
+                            <a href="/2020/09/11/react-redux%E7%9A%84%E4%BD%BF%E7%94%A8/#post-footer" class="postShorten-excerpt_link link">
+                                注释和共享
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
     <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             <div class="postShorten-header">
@@ -536,48 +621,6 @@
                     <p>这是对函数理解的一篇梳理</p>
                     
                         <a href="/2020/06/14/%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0/" class="postShorten-excerpt_link link">
-                            阅读全文
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2020/06/07/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/">
-                            数组操作（二）
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" content="Sun Jun 07 2020 23:19:38 GMT+0800">
-	
-		    6月 07, 2020
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/JS/">JS</a>
-
-
-    
-</div>
-            </div>
-            
-            
-                <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>这是对数组的4个API [forEach\map\filter\reduce] 的实现的理解和比较</p>
-                    
-                        <a href="/2020/06/07/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
