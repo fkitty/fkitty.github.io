@@ -234,6 +234,31 @@
 </ul>
 </li>
 </ul>
+<h5 id="三种方式对比"><a href="#三种方式对比" class="headerlink" title="三种方式对比"></a>三种方式对比</h5><p>回顾一下三个例子，分别用了js+redux 、react+redux、使用库react-redux实现了count功能</p>
+<ul>
+<li>例1<ul>
+<li>引入redux，生产store，stateChange记录状态变更的过程，根据action-type生产新的state，导致render再运行</li>
+<li>三个重点<ul>
+<li>dispatch一个action</li>
+<li>根据action生成一个新的state,并触发一个change事件</li>
+<li>接受到事件，重新render整个UI</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例2<ul>
+<li>和例1的变化：由js变成了react,好处是每次都是局部更新，其他和例1完全一样</li>
+</ul>
+</li>
+<li>例3<ul>
+<li>没有把store传给App,而是传给了Provider,好处就是Provider会把store传给它里面的每一个组件，不用一层一层的往下传。然后App通过connect读store,通过<code>this.props.XXX</code>拿到值，当值要改变的时候，会产生一个action，相比于前面两个例子，省掉了：新的state触发APP的重新渲染（state变化了，provider就知道，就会通知所有组件，哪里有改变就去更新）</li>
+<li>特点<ul>
+<li>所有的数据都从props中获取</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
                     
                         
