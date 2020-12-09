@@ -1153,8 +1153,8 @@ figure.highlight {
 .highlight.c .code .meta-keyword {
   color: #a71d5d; }
 
-.highlight.cpp .code .title ,
-.highlight.c .code .title  {
+.highlight.cpp .code .title ,
+.highlight.c .code .title  {
   color: #795da3; }
 
 .highlight.cpp .code .number,
@@ -1682,7 +1682,7 @@ a.fancybox {
 
 .main-content-wrap {
   display: block;
-  max-width: 1024px !important;
+  max-width: 750px;
   margin: 0 auto;
   padding-right: 20px;
   padding-left: 20px; }

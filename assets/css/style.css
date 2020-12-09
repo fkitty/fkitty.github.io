@@ -4,7 +4,7 @@
  */
 /* FONT PATH
  * -------------------------- */
-@font-face {
+ @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.3.0');
   src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
@@ -3284,8 +3284,8 @@ figure.highlight {
 .highlight.c .code .meta-keyword {
   color: #a71d5d; }
 
-.highlight.cpp .code .title ,
-.highlight.c .code .title  {
+.highlight.cpp .code .title ,
+.highlight.c .code .title  {
   color: #795da3; }
 
 .highlight.cpp .code .number,
@@ -3813,7 +3813,7 @@ a.fancybox {
 
 .main-content-wrap {
   display: block;
-  max-width: 1024px !important;
+  max-width: 750px;
   margin: 0 auto;
   padding-right: 20px;
   padding-left: 20px; }
