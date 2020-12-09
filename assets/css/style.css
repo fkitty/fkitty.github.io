@@ -3813,7 +3813,7 @@ a.fancybox {
 
 .main-content-wrap {
   display: block;
-  max-width: 750px;
+  max-width: 1024px !important;
   margin: 0 auto;
   padding-right: 20px;
   padding-left: 20px; }
